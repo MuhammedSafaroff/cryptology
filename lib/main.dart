@@ -16,16 +16,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(title: 'Sezar Şifrələmə'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -50,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text('Sezar Şifrələmə'),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -116,28 +112,46 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  width: MediaQuery.of(context).size.width - 20,
-                  child: TextFormField(
-                    controller: encryptedController,
-                    style: TextStyle(fontSize: 14.0, color: Colors.black),
-                    decoration: InputDecoration(
-                      hintText: isencrypted
-                          ? "Şifrələmək istədiyiniz kəlimələri daxil edin"
-                          : "Deşifrələmək istədiyiniz kəlimələri daxil edin",
-                      hintStyle: TextStyle(fontSize: 14.0, color: Colors.black),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      child: Container(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        width: MediaQuery.of(context).size.width - 20,
+                        child: TextFormField(
+                          controller: encryptedController,
+                          style: TextStyle(fontSize: 14.0, color: Colors.black),
+                          decoration: InputDecoration(
+                            hintText: isencrypted
+                                ? "Şifrələmək istədiyiniz kəlimələri daxil edin"
+                                : "Deşifrələmək istədiyiniz kəlimələri daxil edin",
+                            hintStyle:
+                                TextStyle(fontSize: 14.0, color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value.length == 0)
+                              return "Xahiş olunur boş qoymayın!";
+                          },
                         ),
                       ),
                     ),
-                    validator: (value) {
-                      if (value.length == 0)
-                        return "Xahiş olunur boş qoymayın!";
-                    },
-                  ),
+                    Positioned(
+                        right: 6,
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.cancel,
+                              color: Colors.blueAccent,
+                            ),
+                            onPressed: () {
+                              encryptedController.text = "";
+                            }))
+                  ],
                 ),
                 SizedBox(height: 10),
                 Padding(
@@ -199,7 +213,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void encrypted(int key, String encryptedText, bool isencrypted) {
     int i, j, k = 0;
-    List a = List();
+    List a = [];
     List x = [
       'a',
       'b',
