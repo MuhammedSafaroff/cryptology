@@ -3,6 +3,8 @@ import 'package:kriptoqrafiya/page/atbash.dart';
 import 'package:kriptoqrafiya/page/polybius.dart';
 import 'package:kriptoqrafiya/page/sezar.dart';
 
+import 'morse.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
@@ -30,6 +32,7 @@ class HomePage extends StatelessWidget {
                 },
                 child: Text(
                   'Sezar Şifrələmə',
+                  textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 color: Colors.indigo,
@@ -46,6 +49,7 @@ class HomePage extends StatelessWidget {
                 },
                 child: Text(
                   'At Bash Şifrələmə',
+                  textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 color: Colors.indigo,
@@ -62,6 +66,24 @@ class HomePage extends StatelessWidget {
                 },
                 child: Text(
                   'Polybius square Şifrələmə',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                color: Colors.indigo,
+              ),
+            ),
+            SizedBox(height: 16),
+            SizedBox(
+              width: 180,
+              height: 50,
+              child: RaisedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Morse()));
+                },
+                child: Text(
+                  'Morse Şifrələmə',
+                  textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 color: Colors.indigo,

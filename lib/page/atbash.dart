@@ -153,7 +153,6 @@ class _AtBashState extends State<AtBash> {
                         encryptedText = encryptedController.text;
                         unencryptedText = '';
                         atbash(encryptedText);
-                        polybius();
                       }
                     },
                     color: Colors.blueAccent,
@@ -345,59 +344,5 @@ class _AtBashState extends State<AtBash> {
         }
       }
     }
-  }
-
-  void polybius() {
-    // List<List<String>> value = [
-    //   ['A', 'B', 'C', 'D', 'E'],
-    //   ['F', 'G', 'H', 'I', 'K'],
-    //   ['L', 'M', 'N', 'O', 'P'],
-    //   ['Q', 'R', 'S', 'T', 'U'],
-    //   ['V', 'W', 'X', 'Y', 'Z']
-    // ];
-
-    List<String> value = [
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'K',
-      'L',
-      'M',
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
-      'X',
-      'Y',
-      'Z'
-    ];
-    String a = '';
-    encryptedText.split('').forEach((element) {
-      int i = value.indexOf(element);
-      int row = i ~/ 5 + 1;
-      int column = i % 5 + 1;
-
-      a += "$row$column,";
-    });
-    print(a);
-
-    // for (int i = 0; i < 5; i++) {
-    //   for (int j = 0; j < 5; j++) {
-    //     if (value[i][j].contains('W')) {
-    //       print("${i + 1} ${j + 1}");
-    //     }
-    //   }
   }
 }

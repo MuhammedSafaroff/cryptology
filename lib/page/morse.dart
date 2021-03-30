@@ -2,17 +2,18 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 
-class Polybius extends StatefulWidget {
-  Polybius({Key key}) : super(key: key);
+class Morse extends StatefulWidget {
+  Morse({Key key}) : super(key: key);
 
   @override
-  _PolybiusState createState() => _PolybiusState();
+  _MorseState createState() => _MorseState();
 }
 
-class _PolybiusState extends State<Polybius> {
+class _MorseState extends State<Morse> {
   final _formKey = GlobalKey<FormState>();
   String encryptedText = '';
   String unencryptedText = '';
+  String a = '';
 
   final encryptedController = TextEditingController();
 
@@ -28,7 +29,7 @@ class _PolybiusState extends State<Polybius> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Polybius square Şifrələmə'),
+        title: Text('Morse  Şifrələmə'),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -118,7 +119,7 @@ class _PolybiusState extends State<Polybius> {
                     unencryptedText,
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 14.0,
+                      fontSize: 30.0,
                       color: Colors.black,
                     ),
                   ),
@@ -153,7 +154,7 @@ class _PolybiusState extends State<Polybius> {
                         encryptedText = encryptedController.text;
                         unencryptedText = '';
 
-                        polybius();
+                        morse();
                       }
                     },
                     color: Colors.blueAccent,
@@ -169,76 +170,103 @@ class _PolybiusState extends State<Polybius> {
     );
   }
 
-  void polybius() {
-    // List<List<String>> deValue = [
-    //   ['A', 'B', 'C', 'D', 'E'],
-    //   ['F', 'G', 'H', 'I', 'K'],
-    //   ['L', 'M', 'N', 'O', 'P'],
-    //   ['Q', 'R', 'S', 'T', 'U'],
-    //   ['V', 'W', 'X', 'Y', 'Z']
-    // ];
-
-    List<String> value1 = [
-      'A',
-      'B',
-      'C',
-      'D',
-      'E',
-      'F',
-      'G',
-      'H',
-      'I',
-      'K',
-      'L',
-      'M',
-      'N',
-      'O',
-      'P',
-      'Q',
-      'R',
-      'S',
-      'T',
-      'U',
-      'V',
-      'W',
-      'X',
-      'Y',
-      'Z'
-    ];
-    String a = '';
-    List<int> index = [];
-
+  void morse() {
     if (isencrypted) {
-      encryptedText.toUpperCase().split('').forEach((element) {
-        if (element == 'J') {
-          a += "24,";
-        } else {
-          int i = value1.indexOf(element);
-          int row = i ~/ 5 + 1;
-          int column = i % 5 + 1;
-
-          a += "$row$column,";
-        }
-      });
+      morseCode(encryptedText);
     } else {
-      encryptedText.toUpperCase().split('').forEach((element) {
-        if (element != ",") {
-          index.add(int.parse(element));
-        }
-      });
-
-      for (int b = 0; b < index.length; b += 2) {
-        var data = (index[b] - 1) * 5 + index[b + 1];
-        if ('${index[b]}${index[b + 1]}' == '24') {
-          a += 'I/J';
-        } else {
-          a += value1[data - 1];
-        }
-      }
+      a = "Deşifrələyə bilmirəm";
     }
 
     setState(() {
       unencryptedText = a;
+    });
+  }
+
+  String morseEncode(String x) {
+    // refer to the Morse table
+    // image attached in the article
+    switch (x) {
+      case 'a':
+        return ".-";
+      case 'b':
+        return "-...";
+      case 'c':
+        return "-.-.";
+      case 'd':
+        return "-..";
+      case 'e':
+        return ".";
+      case 'f':
+        return "..-.";
+      case 'g':
+        return "--.";
+      case 'h':
+        return "....";
+      case 'i':
+        return "..";
+      case 'j':
+        return ".---";
+      case 'k':
+        return "-.-";
+      case 'l':
+        return ".-..";
+      case 'm':
+        return "--";
+      case 'n':
+        return "-.";
+      case 'o':
+        return "---";
+      case 'p':
+        return ".--.";
+      case 'q':
+        return "--.-";
+      case 'r':
+        return ".-.";
+      case 's':
+        return "...";
+      case 't':
+        return "-";
+      case 'u':
+        return "..-";
+      case 'v':
+        return "...-";
+      case 'w':
+        return ".--";
+      case 'x':
+        return "-..-";
+      case 'y':
+        return "-.--";
+      // for space
+      case 'z':
+        return "--..";
+      case '1':
+        return ".----";
+      case '2':
+        return "..---";
+      case '3':
+        return "...--";
+      case '4':
+        return "....-";
+      case '5':
+        return ".....";
+      case '6':
+        return "-....";
+      case '7':
+        return "--...";
+      case '8':
+        return "---..";
+      case '9':
+        return "----.";
+      case '0':
+        return "-----";
+    }
+    return "";
+  }
+
+  void morseCode(String s) {
+    a = '';
+    s.toLowerCase().split('').forEach((element) {
+      a += morseEncode(element) + ",";
     });
   }
 }
